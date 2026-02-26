@@ -1,6 +1,5 @@
 library(animint2)
 
-# 1. India renewable energy dataset
 energy <- data.frame(
   Year = 2012:2023,
   Solar = c(1, 2, 3, 5, 8, 12, 18, 25, 35, 45, 55, 70),
@@ -10,48 +9,64 @@ energy <- data.frame(
   TotalPower = c(120, 125, 130, 138, 150, 165, 180, 195, 210, 230, 250, 275)
 )
 
-# 2. Defining the Visualization
+
 viz <- animint(
   
-  # SOLAR PLOT: Lines/Points visible for all years; click to select
-  solarplot = ggplot(energy, aes(x = Year, y = Solar)) +
-    geom_line(color = "orange", size = 1.5) +
-    geom_point(color = "orange", size = 4, clickSelects = "Year"),
+  solarplot = ggplot() +
+    geom_line(aes(x = Year, y = Solar), data = energy, color = "orange", size = 1.5) +
+
+    geom_vline(aes(xintercept = Year, key = Year), data = energy, 
+               showSelected = "Year", color = "black", linetype = "dashed") +
+    geom_point(aes(x = Year, y = Solar), data = energy, 
+               color = "orange", size = 4, clickSelects = "Year"),
   
-  # WIND PLOT
-  windplot = ggplot(energy, aes(x = Year, y = Wind)) +
-    geom_line(color = "blue", size = 1.5) +
-    geom_point(color = "blue", size = 4, clickSelects = "Year"),
+  windplot = ggplot() +
+    geom_line(aes(x = Year, y = Wind), data = energy, color = "blue", size = 1.5) +
+
+    geom_vline(aes(xintercept = Year, key = Year), data = energy, 
+               showSelected = "Year", color = "black", linetype = "dashed") +
+    geom_point(aes(x = Year, y = Wind), data = energy, 
+               color = "blue", size = 4, clickSelects = "Year"),
   
-  # HYDRO PLOT
-  hydroplot = ggplot(energy, aes(x = Year, y = Hydro)) +
-    geom_line(color = "darkgreen", size = 1.5) +
-    geom_point(color = "darkgreen", size = 4, clickSelects = "Year"),
+  hydroplot = ggplot() +
+    geom_line(aes(x = Year, y = Hydro), data = energy, color = "darkgreen", size = 1.5) +
+
+    geom_vline(aes(xintercept = Year, key = Year), data = energy, 
+               showSelected = "Year", color = "black", linetype = "dashed") +
+    geom_point(aes(x = Year, y = Hydro), data = energy, 
+               color = "darkgreen", size = 4, clickSelects = "Year"),
   
-  # CO2 PLOT
-  co2plot = ggplot(energy, aes(x = Year, y = CO2)) +
-    geom_line(color = "red", size = 1.5) +
-    geom_point(color = "red", size = 4, clickSelects = "Year"),
+  co2plot = ggplot() +
+    geom_line(aes(x = Year, y = CO2), data = energy, color = "red", size = 1.5) +
+
+    geom_vline(aes(xintercept = Year, key = Year), data = energy, 
+               showSelected = "Year", color = "black", linetype = "dashed") +
+    geom_point(aes(x = Year, y = CO2), data = energy, 
+               color = "red", size = 4, clickSelects = "Year"),
   
-  # SCATTER 1
-  scatter1 = ggplot(energy, aes(x = Solar, y = TotalPower)) +
-    geom_point(size = 5, color = "purple", clickSelects = "Year") +
-    geom_text(aes(label = Year), vjust = 0, showSelected = "Year"),
+  scatter1 = ggplot() +
+    geom_point(aes(x = Solar, y = TotalPower, key = Year), data = energy, 
+               size = 5, color = "purple", clickSelects = "Year") +
+
+    geom_text(aes(x = Solar, y = TotalPower, label = Year, key = Year), data = energy, 
+              vjust = 0, showSelected = "Year"),
   
-  # SCATTER 2
-  scatter2 = ggplot(energy, aes(x = Wind, y = TotalPower)) +
-    geom_point(size = 5, color = "brown", clickSelects = "Year") +
-    geom_text(aes(label = Year), vjust = 0, showSelected = "Year"),
+  scatter2 = ggplot() +
+    geom_point(aes(x = Wind, y = TotalPower, key = Year), data = energy, 
+               size = 5, color = "brown", clickSelects = "Year") +
+ 
+    geom_text(aes(x = Wind, y = TotalPower, label = Year, key = Year), data = energy, 
+              vjust = 0, showSelected = "Year"),
   
-  # SETTINGS
-  selector = list(Year = 2023), # Starts the dashboard on the year 2023
-  title = "India Renewable Energy Interactive Dashboard",
+  duration = list(Year = 1000),
+  time = list(variable = "Year", ms = 2000),
+  selector = list(Year = 2012),
+  title = "India Renewable Energy",
   source = "https://github.com/NandaniAggarwal/energy/blob/main/figure-energy.R"
 )
 
-# 3. Render the visualization
 viz
 
 if(FALSE){
-  animint2pages(viz, "energy-types-animation")
+  animint2pages(viz, "energy-types-india-animation")
 }
