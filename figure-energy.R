@@ -129,11 +129,12 @@ viz <- animint(
   title = "India Renewable Energy Growth Interactive Dashboard",
   
   source =
-    "https://github.com/NandaniAggarwal/energy/blob/main/figure-india-energy.R"
+    "https://github.com/NandaniAggarwal/energy/blob/main/figure-energy.R"
 )
 
 viz
 
 if(FALSE){
-  animint2pages(viz,"india-energy")
+  animint2pages(viz,"india-energy-animation")
 }
+
